@@ -1,37 +1,62 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
+import { throttle } from '../utils';
 
-export default ({ id, removeSite }) => {
-    const [title, setTitle] = useState('');
-    const [image, setImage] = useState('');
-    const [prices, setPrices] = useState([]);
+const defaultTimeLeft = 3600;
 
-    const parseHtml = htmlPassed => {
-        var dom = new DOMParser().parseFromString(htmlPassed, 'text/html');
-
-        const titleSelector = 'h1.a-size-large.a-spacing-none';
-        const imgSelector = 'a.a-link-normal img[alt="Return to product information"]';
-        const pricesSelector = '.a-size-large.a-color-price.olpOfferPrice.a-text-bold';
-
-        setTitle(dom.querySelector(titleSelector).innerText);
-        setImage(dom.querySelector(imgSelector).src);
-        const prices = [...dom.querySelectorAll(pricesSelector)].map(el => el.innerHTML.trim());
-        setPrices(prices);
-    };
+export default ({ site, hotSite, removeSite, fetchSite, index }) => {
+    const [timeLeft, setTimeLeft] = useState(defaultTimeLeft);
 
     useEffect(() => {
-        if (prices.length === 0) {
-            window.ipcRenderer.send('PING_URL', id);
+        if (timeLeft === 0) {
+            setTimeLeft(-1); // execute once
+
+            throttle(() => {
+                console.log('updating ' + site.id);
+                setTimeLeft(defaultTimeLeft);
+                fetchSite(site.id);
+            });
         }
-        window.ipcRenderer.on('PING_URL_REPLY', (_, { id: resultId, result: html }) => resultId === id ? parseHtml(html) : null);
-    }, prices);
-    
+
+        /*
+        let timeout;
+        if (timeLeft === defaultTimeLeft) { // if time was reset, I start a new timeout
+        }*/
+
+        const timeout = setTimeout(() => {
+            setTimeLeft(timeLeft - 1);
+        }, 1000);
+        return () => clearInterval(timeout);
+    });
+
+    const prices = site.prices.length > 2 ? site.prices.slice(0, 3) : site.prices;
+    const pricesClasses = [
+        'col-prices',
+        hotSite ? 'hot-price' : ''
+    ];
+
     return (
         <tr class="amazon-item">
-            <td class="col-prices">{prices.map(el => <div>{el}</div>)}</td>
-            <td class="col-image"><img src={image} /></td>
-            <td>{id}</td>
-            <td class="col-title">{title}</td>
-            <td><button onClick={() => removeSite(id)}>Remove this</button></td>
+            <td>{index + 1}</td>
+            <td class={pricesClasses.join(' ')}>
+                {prices.map(el => <div>{el}</div>)}
+            </td>
+            <td>
+                <div>
+                    Last: {moment(site.lastPing).format('HH:mm.ss')}
+                </div>
+                <div>
+                    Next: {timeLeft >= 0 ? timeLeft : 0}
+                </div>
+            </td>
+            <td class="col-image"><img src={site.image} /></td>
+            <td>{site.id}</td>
+            <td class="col-title">{site.title}</td>
+            <td>
+                <button onClick={() => window.ipcRenderer.send('OPEN_URL', site.url)}>🔗</button>
+                <button onClick={() => fetchSite(site.id)}>🔄</button>
+                <button onClick={() => removeSite(site.id)}>❌</button>
+            </td>
         </tr>
     )
 }

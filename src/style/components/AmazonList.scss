@@ -10,13 +10,18 @@
         }
     
         .col-prices {
-            background: rgb(255, 48, 48);
-            color: white;
+            color: black;
             border-bottom: 1px solid rgb(119, 0, 0);
+
+            &.hot-price {
+                background: rgb(255, 48, 48);
+                color: white;
+
+            }
         }
     
         .col-image img {
-            height: 30px;
+            height: 50px;
         }
     
         .col-title {
@@ -25,5 +30,20 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+    }
+}
+
+.add-site {
+    margin-top: 20px;
+    font-size: 34px;
+
+    input {
+        width: 70%;
+        height: 34px;
+        text-align: center;
+    }
+    button {
+        width: 29%;
+        height: 40px;
     }
 }
