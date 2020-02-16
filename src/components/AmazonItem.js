@@ -2,44 +2,51 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import { throttle } from '../utils';
 
-const defaultTimeLeft = 3600;
+const defaultTimeLeft = 600; // 10 minutes
 
 export default ({ site, hotSite, removeSite, fetchSite, index }) => {
     const [timeLeft, setTimeLeft] = useState(defaultTimeLeft);
 
+    const throttledFetch = () => {
+        throttle(() => {
+            console.log('updating ' + site.id);
+            setTimeLeft(defaultTimeLeft);
+            fetchSite(site.id);
+        });
+    }
+
     useEffect(() => {
         if (timeLeft === 0) {
             setTimeLeft(-1); // execute once
-
-            throttle(() => {
-                console.log('updating ' + site.id);
-                setTimeLeft(defaultTimeLeft);
-                fetchSite(site.id);
-            });
+            throttledFetch();
         }
-
-        /*
-        let timeout;
-        if (timeLeft === defaultTimeLeft) { // if time was reset, I start a new timeout
-        }*/
-
+        
         const timeout = setTimeout(() => {
             setTimeLeft(timeLeft - 1);
         }, 1000);
-        return () => clearInterval(timeout);
-    });
+        return () => clearTimeout(timeout);
+    }, [timeLeft]);
 
-    const prices = site.prices.length > 2 ? site.prices.slice(0, 3) : site.prices;
+    let offers = [];
+    if (site.offers) offers = site.offers.length > 2 ? site.offers.slice(0, 3) : site.offers;
     const pricesClasses = [
         'col-prices',
         hotSite ? 'hot-price' : ''
     ];
 
+
     return (
         <tr class="amazon-item">
             <td>{index + 1}</td>
-            <td class={pricesClasses.join(' ')}>
-                {prices.map(el => <div>{el}</div>)}
+            
+            <td>
+                {offers.map((offer, index) => (
+                    <div class="offer">
+                        <span class={hotSite && index === 0 ? 'hot price' : 'price'}>{offer.price}</span>
+                        {offer.condition !== 'New' && <span class="condition">&nbsp;U</span>}
+                        {offer.seller === 'Amazon' && <span class="seller">&nbsp;A</span>}
+                    </div>
+                ))}
             </td>
             <td>
                 <div>
@@ -52,9 +59,9 @@ export default ({ site, hotSite, removeSite, fetchSite, index }) => {
             <td class="col-image"><img src={site.image} /></td>
             <td>{site.id}</td>
             <td class="col-title">{site.title}</td>
-            <td>
+            <td class="col-actions">
                 <button onClick={() => window.ipcRenderer.send('OPEN_URL', site.url)}>🔗</button>
-                <button onClick={() => fetchSite(site.id)}>🔄</button>
+                <button onClick={throttledFetch}>🔄</button>
                 <button onClick={() => removeSite(site.id)}>❌</button>
             </td>
         </tr>

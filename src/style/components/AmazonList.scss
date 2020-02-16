@@ -8,6 +8,22 @@
         td {
             padding: 0 5px;
         }
+
+        .offer {
+            .price {
+                color: black;
+
+                &.hot {
+                    color: green;
+                }
+            }
+            .condition {
+                color: blueviolet;
+            }
+            .seller {
+                color: black;
+            }
+        }
     
         .col-prices {
             color: black;
@@ -30,20 +46,64 @@
             text-overflow: ellipsis;
             white-space: nowrap;
         }
+
+        .col-actions {
+            button {
+                border-radius: 3px;
+                margin-left: 2px;
+            }
+            button:first-child {
+                margin-left: 0;
+            }
+        }
     }
 }
 
 .add-site {
     margin-top: 20px;
     font-size: 34px;
+    text-align: center;
 
     input {
-        width: 70%;
-        height: 34px;
+        width: 50%;
+        height: 32px;
         text-align: center;
+        border: 2px solid #434343;
+        vertical-align: middle;
+    }
+    select {
+        width: 20%;
+        height: 32px;
+        vertical-align: middle;
     }
     button {
         width: 29%;
         height: 40px;
+        background: #434343;
+        color: white;
+        text-transform: uppercase;
+        vertical-align: middle;
+    }
+}
+
+.add-category {
+    margin-top: 20px;
+    font-size: 34px;
+    text-align: center;
+
+    input {
+        width: 70%;
+        height: 32px;
+        text-align: center;
+        border: 2px solid #434343;
+        vertical-align: middle;
+    }
+    button {
+        width: 29%;
+        height: 40px;
+        background: #434343;
+        color: white;
+        text-transform: uppercase;
+        vertical-align: middle;
     }
 }

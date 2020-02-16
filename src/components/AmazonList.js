@@ -3,10 +3,20 @@ import AmazonItem from './AmazonItem';
 import { parseSite, dbSetSites, dbGetSites, getLowestPrice } from '../utils';
 
 export default () => {
-    const [sites, setSites] = useState(dbGetSites() || []);
+    const [categories, setSites] = useState(dbGetCategories() || []);
+    const [sites, setSites] = useState(dbGetSites(categories) || []);
+
     const [hotSite, setHotSite] = useState(getLowestPrice(sites));
     window.hotSite = hotSite;
     const siteText = useRef('');
+    const siteCategory = useRef('');
+    const categoryText = useRef(''); // add a new category
+
+    const categories = [
+        'RX 5700',
+        'RTX 2080 Super',
+        'Macbook Pro'
+    ];
 
     const fetchSite = siteId => window.ipcRenderer.send('PING_URL', siteId);
 
@@ -47,6 +57,10 @@ export default () => {
         fetchSite(siteId);
     }
 
+    const addCategory = () => {
+        console.log('added' , categoryText.current.value);
+    }
+
     useEffect(() => {
         window.ipcRenderer.on('PING_URL_REPLY', (_, { id, url, html }) => addSite(id, url, html));
 
@@ -61,12 +75,17 @@ export default () => {
             </table>
 
             <div class="add-site">
-                <input ref={siteText} type="text" />
-                <button onClick={processSiteToAdd}>add site</button>
+                <input ref={siteText} type="text" placeholder="Amazon URL" />
+                <select ref={siteCategory}>
+                    {categories.map(category => <option value={category}>{category}</option>)}
+                </select>
+                <button onClick={processSiteToAdd}>ADD SITE</button>
             </div>
 
-            <div>
-                <button onClick={() => updateSites([])}>reset sites</button>
+
+            <div class="add-category">
+                <input ref={categoryText} type="text" placeholder="Category Name, f.e. MACBOOK" />
+                <button onClick={addCategory}>ADD CATEGORY</button>
             </div>
         </div>
     );
