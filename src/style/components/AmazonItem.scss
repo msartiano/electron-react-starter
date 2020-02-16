@@ -1,0 +1,29 @@
+#amazon-items-table {
+    border-collapse: collapse;
+    width: 100%;
+
+    .amazon-item {
+        font-size: 12px;
+    
+        td {
+            padding: 0 5px;
+        }
+    
+        .col-prices {
+            background: rgb(255, 48, 48);
+            color: white;
+            border-bottom: 1px solid rgb(119, 0, 0);
+        }
+    
+        .col-image img {
+            height: 30px;
+        }
+    
+        .col-title {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+}
