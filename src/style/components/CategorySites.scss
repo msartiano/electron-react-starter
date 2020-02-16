@@ -1,0 +1,62 @@
+.single-category {
+    .sites-table {
+        border-collapse: collapse;
+        width: 100%;
+    
+        .single-site {
+            font-size: 12px;
+        
+            td {
+                padding: 0 5px;
+            }
+    
+            .offer {
+                .price {
+                    color: black;
+    
+                    &.hot {
+                        color: green;
+                    }
+                }
+                .condition {
+                    color: blueviolet;
+                }
+                .seller {
+                    color: black;
+                }
+            }
+        
+            .col-prices {
+                color: black;
+                border-bottom: 1px solid rgb(119, 0, 0);
+    
+                &.hot-price {
+                    background: rgb(255, 48, 48);
+                    color: white;
+    
+                }
+            }
+        
+            .col-image img {
+                height: 50px;
+            }
+        
+            .col-title {
+                max-width: 200px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+    
+            .col-actions {
+                button {
+                    border-radius: 3px;
+                    margin-left: 2px;
+                }
+                button:first-child {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+}

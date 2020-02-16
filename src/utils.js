@@ -4,18 +4,22 @@ const get = (key, defaultValue) => {
     return JSON.parse(value);
 }
 const set = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+const remove = key => localStorage.removeItem(key);
+
+export const getSiteKey = key => `${key}-sites`;
 
 export const db = {
     categories: {
-        get: () => get('categories', {}),
+        get: () => get('categories', []),
         set: value => set('categories', value),
     },
     sites: {
-        get: category => get(`${category}-sites`),
-        set: (category, value) => set(`${category}-sites`, value)
+        get: category => get(getSiteKey(category), {}),
+        set: (category, value) => set(getSiteKey(category), value),
+        removeByCategory: (category) => remove(getSiteKey(category))
     },
     options: {
-        get: () => get('options'),
+        get: () => get('options', {}),
         set: value => set('options', value),
     }
 };

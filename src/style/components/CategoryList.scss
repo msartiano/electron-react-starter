@@ -1,0 +1,21 @@
+.categories {
+    .single-category {
+        .category-header {    
+            background: #434343;
+            color: white;
+            text-align: center;
+            font-size: 20px;
+            padding: 6px;
+
+            .remove-category {
+                float: right;
+
+                button {
+                    color: yellowgreen;
+                    background: transparent;
+                    border: none;
+                }
+            }
+        }
+    }
+}

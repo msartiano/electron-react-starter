@@ -1,11 +1,13 @@
 import React from 'react';
+import { useStore } from '../Store';
+    //             <button onClick={() => updateSites([])}>reset sites DOESNT WORK NOW</button>
 
 export default () => {
-    //             <button onClick={() => updateSites([])}>reset sites DOESNT WORK NOW</button>
+    const [store, dispatch] = useStore();
 
     return (
         <div>
-            RESET SITE but doesnt wor
+            DEBUG TOOLS
         </div>
     );
-}
+};

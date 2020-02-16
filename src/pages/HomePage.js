@@ -1,12 +1,12 @@
 import React from 'react';
-import ItemsCategories from '../components/ItemCategories';
+import CategoryList from '../components/CategoryList';
 import AddSite from '../components/AddSite';
 import AddCategory from '../components/AddCategory';
 import DebugTools from '../components/DebugTools';
 
 export default () => (
     <main>
-        <ItemsCategories />
+        <CategoryList />
         <AddSite />
         <AddCategory />
         <DebugTools />
