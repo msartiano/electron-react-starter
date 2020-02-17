@@ -28,10 +28,8 @@ export default () => {
 
         if (siteId.trim().length < 1) return siteText.current.value = 'Error. Copy URL from Amazon UK Search.';
         if (isSitePresent(siteId, category)) {
-            console.log('---> PRESENTE');
             return cleanTextForm();
         } else {
-            console.log('<--- Assente')
             fetchSite(siteId);
         }
     }
