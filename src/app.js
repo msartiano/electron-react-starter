@@ -56,6 +56,17 @@ export default () => {
                 db.sites.set(currentCategory, sitesInCategory);
                 return newState;
             }
+            case 'UPDATE_SITE': {
+                const currentCategory = action.data.category;
+                const currentSite = action.data.site;
+                const sitesClone = { ...state.sites };
+                let sitesInCategory = [...sitesClone[currentCategory]];
+                sitesInCategory = sitesInCategory.map(site => site.id === currentSite.id ? currentSite : site);
+
+                const newState = { ...state, sites: { ...state.sites, [currentCategory]: sitesInCategory }};
+                db.sites.set(currentCategory, sitesInCategory);
+                return newState;
+            }
             default:
                 return state;
         }

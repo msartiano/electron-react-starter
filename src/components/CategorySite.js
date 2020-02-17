@@ -8,11 +8,12 @@ export default ({ category, site, defaultTimeLeft, hotSiteInCategory, siteIndex 
     const [store, dispatch] = useStore();
     const [timeLeft, setTimeLeft] = useState(defaultTimeLeft);
 
-    const throttledFetch = site => {
+    const throttledFetch = () => {
         throttle(() => {
             console.log('updating ' + site.id);
+            // TODO set the time only after the site has been updated
             setTimeLeft(defaultTimeLeft);
-            dispatch('UPDATE_SITE', { category, site });
+            window.ipcRenderer.send('UPDATE_SITE', { category, site: { id: site.id }});
         });
     }
 
