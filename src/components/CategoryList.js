@@ -6,7 +6,7 @@ export default () => {
     const [store, dispatch] = useStore();
 
     return (
-        <div class="categories">            
+        <div class="categories">
             {store.categories.map(category => (
                 <div class="single-category">
                     <div class="category-header">

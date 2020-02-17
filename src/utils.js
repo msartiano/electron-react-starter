@@ -24,6 +24,31 @@ export const db = {
     }
 };
 
+
+export const getLowestPriceInCategory = (category) => {
+    const sites = db.sites.get(category);
+
+    let leastPriceSite = { prices: [9999999] };
+    let currentLowestPrice = 9999999;
+
+    sites.forEach(site => {
+        site.prices.forEach(price => {
+            const thisPrice = parseFloat(price.replace(/£|€|\$/gi, ''), 10);
+            if (thisPrice < currentLowestPrice) {
+                currentLowestPrice = thisPrice;
+                leastPriceSite = site;
+            }
+        });
+    });
+
+    return leastPriceSite;
+}
+
+
+
+
+
+
 export const clearSites = () => localStorage.removeItem("amazonSites");
 
 export const dbGetCategories = () => JSON.parse(localStorage.getItem("amazonSites")) || [];
