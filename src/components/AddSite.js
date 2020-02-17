@@ -47,13 +47,12 @@ export default () => {
         }
     };
     useEffect(() => {
-        window.ipcRenderer.on('PING_URL_REPLY', (_, { id, url, html }) => {
-            console.log('======= PING_URL_REPLY ====== RECEIVED', id);
-            addSite(id, url, html);
-        });
+        const pingUrlReply = (_, { id, url, html }) => addSite(id, url, html);
+        window.ipcRenderer.on('PING_URL_REPLY', pingUrlReply);
 
         //const lowestPriceSite = getLowestPrice(sites);
         //if (hotSite.id !== lowestPriceSite) setHotSite(lowestPriceSite);
+        return () => window.ipcRenderer.removeListener('PING_URL_REPLY', pingUrlReply);
     });
 
     return (
