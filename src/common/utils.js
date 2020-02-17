@@ -24,7 +24,7 @@ export const db = {
     }
 };
 
-export const getLowestPriceInCategory = (category) => {
+export const getLowestPriceInCategory = category => {
     const sites = db.sites.get(category);
 
     let leastPriceSite = { prices: [9999999] };
