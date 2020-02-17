@@ -6,13 +6,13 @@ export default () => {
     const [store, dispatch] = useStore();
 
     return (
-        <div class="categories">
+        <div className="categories">
             {store.categories.map(category => (
-                <div class="single-category">
-                    <div class="category-header">
+                <div className="single-category">
+                    <div className="category-header">
                         {category}
-                        <div class="remove-category">
-                            <button onClick={() => dispatch('REMOVE_CATEGORY_AND_SITES', { category })}>X</button>
+                        <div className="remove-category">
+                            <button type="button" onClick={() => dispatch('REMOVE_CATEGORY_AND_SITES', { category })}>X</button>
                         </div>
                     </div>
 

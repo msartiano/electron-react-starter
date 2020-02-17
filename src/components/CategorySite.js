@@ -10,12 +10,12 @@ export default ({ category, site, defaultTimeLeft, hotSiteInCategory, siteIndex 
 
     const throttledFetch = () => {
         throttle(() => {
-            console.log('updating ' + site.id);
+            console.log(`updating ${site.id}`);
             // TODO set the time only after the site has been updated
             setTimeLeft(defaultTimeLeft);
             window.ipcRenderer.send('UPDATE_SITE', { category, site: { id: site.id }});
         });
-    }
+    };
 
     useEffect(() => {
         if (timeLeft < 0) {
@@ -29,22 +29,23 @@ export default ({ category, site, defaultTimeLeft, hotSiteInCategory, siteIndex 
             }, 1000);
             return () => clearTimeout(timeout);
         }
-    }, [timeLeft]);
+        return () => {};
+    });
 
     let offers = [];
     if (site.offers) offers = site.offers.length > 2 ? site.offers.slice(0, 3) : site.offers;
     const isThisSiteHot = hotSiteInCategory.id === site.id;
 
     return (
-        <tr class="single-site">
+        <tr className="single-site">
             <td>{siteIndex + 1}</td>
 
-            <td class="col-prices">
+            <td className="col-prices">
                 {offers.map((offer, index) => (
-                    <div class="offer">
-                        <span class={isThisSiteHot && index === 0 ? 'hot price' : 'price'}>{offer.price}</span>
-                        {offer.condition !== 'New' && <span class="condition">&nbsp;U</span>}
-                        {offer.seller === 'Amazon' && <span class="seller">&nbsp;A</span>}
+                    <div className="offer">
+                        <span className={isThisSiteHot && index === 0 ? 'hot price' : 'price'}>{offer.price}</span>
+                        {offer.condition !== 'New' && <span className="condition">&nbsp;U</span>}
+                        {offer.seller === 'Amazon' && <span className="seller">&nbsp;A</span>}
                     </div>
                 ))}
             </td>
@@ -56,14 +57,14 @@ export default ({ category, site, defaultTimeLeft, hotSiteInCategory, siteIndex 
                     Next: {timeLeft >= 0 ? timeLeft : 0}
                 </div>
             </td>
-            <td class="col-image"><img src={site.image} /></td>
+            <td className="col-image"><img alt="product" src={site.image} /></td>
             <td>{site.id}</td>
-            <td class="col-title">{site.title}</td>
-            <td class="col-actions">
-                <button onClick={() => window.ipcRenderer.send('OPEN_URL', site.url)}>🔗</button>
-                <button onClick={throttledFetch}>🔄</button>
-                <button onClick={() => dispatch('REMOVE_SITE', { category, site })}>❌</button>
+            <td className="col-title">{site.title}</td>
+            <td className="col-actions">
+                <button type="button" onClick={() => window.ipcRenderer.send('OPEN_URL', site.url)}>🔗</button>
+                <button type="button" onClick={throttledFetch}>🔄</button>
+                <button type="button" onClick={() => dispatch('REMOVE_SITE', { category, site })}>❌</button>
             </td>
         </tr>
     );
-}
+};

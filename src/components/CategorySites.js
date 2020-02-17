@@ -11,7 +11,7 @@ export default ({ category }) => {
     const hotSiteInCategory = getLowestPriceInCategory(category);
 
     return (
-        <div class="single-category">
+        <div className="single-category">
             <table id="sites-table">
                 {store.sites[category].map((site, index) => (
                     <CategorySite

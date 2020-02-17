@@ -2,7 +2,7 @@ const get = (key, defaultValue) => {
     const value = localStorage.getItem(key);
     if (!value) return defaultValue;
     return JSON.parse(value);
-}
+};
 const set = (key, value) => localStorage.setItem(key, JSON.stringify(value));
 const remove = key => localStorage.removeItem(key);
 
@@ -41,15 +41,22 @@ export const getLowestPriceInCategory = (category) => {
     });
 
     return leastPriceSite;
-}
+};
 
 export const sortByKey = (arr, key) => arr.sort((a, b) => {
     if (a[key] < b[key]) return -1;
-    else if (a[key] > b[key]) return 1;
+    if (a[key] > b[key]) return 1;
     return 0;
 });
 
-const createSite = ({ id, title, image, url, prices, offers }) => ({
+const createSite = ({
+    id,
+    title,
+    image,
+    url,
+    prices,
+    offers
+}) => ({
     id,
     title,
     url,
@@ -62,7 +69,7 @@ const createSite = ({ id, title, image, url, prices, offers }) => ({
 const trim = str => str.replace(/\s\s+/g, ' ').trim();
 
 export const parseSite = (id, url, html) => {
-    var dom = new DOMParser().parseFromString(html, 'text/html');
+    const dom = new DOMParser().parseFromString(html, 'text/html');
 
     const titleSelector = 'h1.a-size-large.a-spacing-none';
     const imgSelector = 'a.a-link-normal img[alt="Return to product information"]';
@@ -88,7 +95,14 @@ export const parseSite = (id, url, html) => {
     });
     const prices = [...dom.querySelectorAll(pricesSelector)].map(el => el.innerHTML.trim());
 
-    return createSite({ id, title, image, url, offers, prices });
+    return createSite({
+        id,
+        title,
+        image,
+        url,
+        offers,
+        prices
+    });
 };
 
 const throttleBy = 10000; // 10 seconds
@@ -96,7 +110,7 @@ let lastExecutedFn = Date.now();
 export const throttle = fn => {
     const now = Date.now();
     if (now >= lastExecutedFn) lastExecutedFn = now + throttleBy;
-    else lastExecutedFn = lastExecutedFn + throttleBy;
+    else lastExecutedFn += throttleBy;
     const relativeTimeFromNow = Math.abs(lastExecutedFn - now);
 
     setTimeout(() => {
@@ -104,4 +118,4 @@ export const throttle = fn => {
         fn();
     }, relativeTimeFromNow);
     console.log('[throttle] called, setting next to ', lastExecutedFn);
-}
+};
