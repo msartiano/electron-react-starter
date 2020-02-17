@@ -17,4 +17,7 @@ todo:
         ]
     }
 }
-[ ] SQLite e db per 
+[ ] SQLite e db per
+
+[ ] Sync changes in some way so that I can access my prefs in different computer - store in heroku database?
+[ ] Send Email once a new offer has been received in a specific category
