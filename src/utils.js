@@ -52,16 +52,6 @@ export const sortByKey = (arr, key) => arr.sort((a, b) => {
 
 
 
-
-export const clearSites = () => localStorage.removeItem("amazonSites");
-
-export const dbGetCategories = () => JSON.parse(localStorage.getItem("amazonSites")) || [];
-export const dbGetSites = () => JSON.parse(localStorage.getItem("amazonSites")) || [];
-
-export const dbAddSite = site => localStorage.setItem('amazonSites', JSON.stringify([...getSites(), site]));
-
-export const dbSetSites = sites => localStorage.setItem('amazonSites', JSON.stringify(sites));
-
 const createSite = ({ id, title, image, url, prices, offers }) => ({
     id,
     title,
@@ -104,25 +94,8 @@ export const parseSite = (id, url, html) => {
     return createSite({ id, title, image, url, offers, prices });
 };
 
-export const getLowestPrice = (sites) => {
-    let leastPriceSite = { prices: [9999999] };
-    let currentLowestPrice = 9999999;
-
-    sites.forEach(site => {
-        site.prices.forEach(price => {
-            const thisPrice = parseFloat(price.replace(/£|€|\$/gi, ''), 10);
-            if (thisPrice < currentLowestPrice) {
-                currentLowestPrice = thisPrice;
-                leastPriceSite = site;
-            }
-        });
-    });
-
-    return leastPriceSite;
-}
-
 const throttleBy = 10000; // 10 seconds
-let lastExecutedFn = Date.now()
+let lastExecutedFn = Date.now();
 export const throttle = fn => {
     const now = Date.now();
     if (now >= lastExecutedFn) lastExecutedFn = now + throttleBy;
