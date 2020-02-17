@@ -25,5 +25,9 @@
         color: white;
         text-transform: uppercase;
         vertical-align: middle;
+
+        &[disabled] {
+            background: #999;
+        }
     }
 }

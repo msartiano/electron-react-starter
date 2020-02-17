@@ -66,7 +66,7 @@ export default () => {
             <select ref={siteCategory}>
                 {store.categories.map(category => <option value={category}>{category}</option>)}
             </select>
-            <button type="button" onClick={processSiteToAdd}>ADD SITE</button>
+            <button type="button" onClick={processSiteToAdd} disabled={store.categories.length < 1}>{store.categories.length > 0 ?'ADD SITE':'ADD A CATEGORY FIRST'}</button>
         </div>
     );
 };
