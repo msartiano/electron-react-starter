@@ -47,7 +47,7 @@ export default () => {
         window.ipcRenderer.on('PING_URL_REPLY', pingUrlReply);
 
         return () => window.ipcRenderer.removeListener('PING_URL_REPLY', pingUrlReply);
-    });
+    }, [store.categories]);
 
     return (
         <div class="add-site">
