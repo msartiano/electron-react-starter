@@ -30,6 +30,9 @@ todo:
 [ ] Better 'Get amazon id from link' algorithm
 [ ] support other amazon, like amazon.it, requires 1x 'lowest price' link, 1x id matcher algorithm, x new CSS selector (maybe)
 
+Technical
+[ ] Add ESLINT with React + Hooks rules.
+
 Options
 [ ] Site: Toggle image size
 [ ] Category: Header, small medium big
