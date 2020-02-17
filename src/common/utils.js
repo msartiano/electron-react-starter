@@ -24,7 +24,6 @@ export const db = {
     }
 };
 
-
 export const getLowestPriceInCategory = (category) => {
     const sites = db.sites.get(category);
 
@@ -49,8 +48,6 @@ export const sortByKey = (arr, key) => arr.sort((a, b) => {
     else if (a[key] > b[key]) return 1;
     return 0;
 });
-
-
 
 const createSite = ({ id, title, image, url, prices, offers }) => ({
     id,

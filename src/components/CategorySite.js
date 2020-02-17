@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
 import { useStore } from '../Store';
-import { throttle } from '../utils';
+import { throttle } from '../common/utils';
 
 export default ({ category, site, defaultTimeLeft, hotSiteInCategory, siteIndex }) => {
     const [store, dispatch] = useStore();

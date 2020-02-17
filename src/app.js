@@ -1,7 +1,7 @@
 import React from 'react';
 import HomePage from './pages/HomePage';
 import { Connect } from './Store';
-import { db, sortByKey } from './utils';
+import { db, sortByKey } from './common/utils';
 
 export default () => {
     const initialState = {

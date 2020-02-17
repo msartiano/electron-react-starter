@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { useStore } from '../Store';
-import { getLowestPriceInCategory } from '../utils';
+import { getLowestPriceInCategory } from '../common/utils';
 import CategorySite from './CategorySite';
 
 export default ({ category }) => {

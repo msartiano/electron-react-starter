@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { useStore } from '../Store';
-import { parseSite } from '../utils';
+import { parseSite } from '../common/utils';
 
 export default () => {
     const [store, dispatch] = useStore();
@@ -39,8 +39,6 @@ export default () => {
         // TODO: siteCategory.current.value may have changed while it fetches the record ..
         if (!isSitePresent(id, siteCategory.current.value)) {
             dispatch('ADD_SITE', { category: siteCategory.current.value, site: parseSite(id, url, html) });
-    //        const newSites = [...sites.filter(site => site.id !== id), parseSite(id, url, html)];
-    //        updateSites(newSites);
             cleanTextForm();
         }
     };
@@ -48,8 +46,6 @@ export default () => {
         const pingUrlReply = (_, { id, url, html }) => addSite(id, url, html);
         window.ipcRenderer.on('PING_URL_REPLY', pingUrlReply);
 
-        //const lowestPriceSite = getLowestPrice(sites);
-        //if (hotSite.id !== lowestPriceSite) setHotSite(lowestPriceSite);
         return () => window.ipcRenderer.removeListener('PING_URL_REPLY', pingUrlReply);
     });
 
