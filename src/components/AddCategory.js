@@ -6,9 +6,9 @@ export default () => {
     const categoryText = useRef('');
 
     return (
-        <div className="add-category">
+        <section className="add-category">
             <input ref={categoryText} type="text" placeholder="Category Name, f.e. MACBOOK" />
             <button type="button" onClick={() => dispatch('ADD_CATEGORY', { category: categoryText.current.value })}>ADD CATEGORY</button>
-        </div>
+        </section>
     );
 };

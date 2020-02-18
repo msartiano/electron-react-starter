@@ -61,12 +61,12 @@ export default () => {
     });
 
     return (
-        <div className="add-site">
+        <section className="add-site">
             <input ref={siteText} type="text" placeholder="Amazon URL" />
             <select ref={siteCategory}>
                 {store.categories.map(category => <option value={category}>{category}</option>)}
             </select>
             <button type="button" onClick={processSiteToAdd} disabled={store.categories.length < 1}>{store.categories.length > 0 ?'ADD SITE':'ADD A CATEGORY FIRST'}</button>
-        </div>
+        </section>
     );
 };
