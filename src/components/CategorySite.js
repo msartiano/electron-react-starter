@@ -3,6 +3,7 @@ import moment from 'moment';
 
 import { useStore } from '../Store';
 import { throttle } from '../common/utils';
+import SiteOffers from './SiteOffers';
 
 export default ({ category, site, defaultTimeLeft, hotSiteInCategory, siteIndex }) => {
     const [store, dispatch] = useStore();
@@ -32,22 +33,13 @@ export default ({ category, site, defaultTimeLeft, hotSiteInCategory, siteIndex 
         return () => {};
     });
 
-    let offers = [];
-    if (site.offers) offers = site.offers.length > 2 ? site.offers.slice(0, 3) : site.offers;
     const isThisSiteHot = hotSiteInCategory.id === site.id;
 
     return (
         <tr className="single-site">
             <td>{siteIndex + 1}</td>
-
             <td className="col-prices">
-                {offers.map((offer, index) => (
-                    <div className="offer">
-                        <span className={isThisSiteHot && index === 0 ? 'hot price' : 'price'}>{offer.price}</span>
-                        {offer.condition !== 'New' && <span className="condition">&nbsp;U</span>}
-                        {offer.seller === 'Amazon' && <span className="seller">&nbsp;A</span>}
-                    </div>
-                ))}
+                <SiteOffers offers={site.offers} hotSite={isThisSiteHot} />
             </td>
             <td>
                 <div>

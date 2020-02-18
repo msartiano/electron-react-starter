@@ -78,6 +78,7 @@ export const parseSite = (id, url, html) => {
     const pricesSelector = '.a-size-large.a-color-price.olpOfferPrice.a-text-bold';
     const conditionSelector = '.a-size-medium.olpCondition.a-text-bold';
     const sellerSelector = '.a-spacing-none.olpSellerName';
+    const primeSelector = '.supersaver';
 
     // querySelectors
     const title = dom.querySelector(titleSelector).innerText.trim();
@@ -88,10 +89,11 @@ export const parseSite = (id, url, html) => {
     offersHtml.forEach(offer => {
         const price = trim(offer.querySelector(pricesSelector).innerHTML);
         const condition = trim(offer.querySelector(conditionSelector).innerHTML);
+        const prime = offer.querySelector(primeSelector) !== null;
         let seller = trim(offer.querySelector(sellerSelector).innerText);
         if (seller.length < 1) seller = 'Amazon';
 
-        offers.push({ price, condition, seller });
+        offers.push({ price, condition, seller, prime });
     });
     const prices = [...dom.querySelectorAll(pricesSelector)].map(el => el.innerHTML.trim());
 
