@@ -1,0 +1,13 @@
+section#options {
+    padding: 20px 0;
+
+    .option-item {
+        text-align: center;
+
+        button,
+        select {
+            width: 100%;
+            height: 40px;
+        }
+    }
+}
