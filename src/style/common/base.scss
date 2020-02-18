@@ -4,7 +4,36 @@ body {
 }
 
 button {
+    background: #434343;
     border: 1px solid #ddd;
-    padding: 2px 2px 4px 2px;
+    color: white;
     cursor: pointer;
+    height: 40px;
+    padding: 2px 2px 4px 2px;
+    text-transform: uppercase;
+    vertical-align: middle;
+
+    &[disabled] {
+        background: #999;
+    }
+}
+
+input {
+    text-align: center;
+    border: 2px solid #434343;
+    vertical-align: middle;
+}
+
+select {
+    margin-left: 1px;
+    text-align: center;
+    border: 2px solid #434343;
+    vertical-align: middle;
+}
+
+.col {
+    .col-1-3 {
+        display: inline-block;
+        width: 33%;
+    }
 }
